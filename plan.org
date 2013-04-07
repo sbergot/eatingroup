@@ -1,0 +1,34 @@
+* eatingroup
+** initial tests
+*** DONE sync handler
+*** DONE async handler
+*** DONE static file
+*** TODO websocket
+*** TODO knockout.js
+*** TODO jquery animations
+** design
+   single page web app.
+   the page present a list of eating group. At the bottom of the page,
+   a big button allows to create a new group.
+*** eating group informations
+**** eating plan
+     text field. The user can specify the place, the type of food,
+     etc. There is no imposed format.
+**** total number and names of people in the group
+     automatically updated when a change occur
+**** time before departure
+     automatically decreases every seconds
+*** creation
+    the user must provide all the group information except the number
+    of people. When he clicks ok, the group is created/published, and
+    he automatically joins it.
+*** postpone
+    someone can ask to postpone the departure. If the majority of
+    people accept, the departure is effectively postponed
+*** user infos
+    the user can select a name to be displayed in the joined group
+*** destruction
+    if a group is empty, it is automatically destroyed
+*** departure
+    when the departure time is reached, a big modal window warns the
+    user.
