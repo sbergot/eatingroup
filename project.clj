@@ -8,5 +8,6 @@
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [aleph "0.3.0-beta15"]
                  [lamina "0.5.0-beta15"]
-                 [compojure "1.1.5"]]
+                 [compojure "1.1.5"]
+                 [hiccup "1.0.3"]]
   :main eatingroup.core)

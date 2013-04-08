@@ -3,6 +3,7 @@
 *** DONE sync handler
 *** DONE async handler
 *** DONE static file
+*** DONE bootstrap
 *** TODO websocket
 *** TODO knockout.js
 *** TODO jquery animations
