@@ -49,6 +49,8 @@
      [:dl.dl-horizontal.well.group
       [:dt "Quoi?"]
       [:dd {:data-bind "text: description"}]
+      [:dt "Quand?"]
+      [:dd {:data-bind "text: time"}]
       [:dt "Qui?"]
       [:dd {:data-bind "text: members"}]]]]
    [:div.row-fluid

@@ -1,7 +1,8 @@
 (function() {
 
-    function GroupViewModel(desc, members) {
+    function GroupViewModel(desc, time, members) {
         this.description = desc;
+        this.time = time;
         this.members = members.join(", ");
     }
 
@@ -11,6 +12,7 @@
             this.groups.push(
                 new GroupViewModel(
                     "manger un delicieux sandwich chez subway!!",
+                    "1 : 00 : 00",
                     ["simon",
                      "lucien",
                      "françois"])
@@ -31,13 +33,15 @@
 
     ko.applyBindings(new AppViewModel([
         new GroupViewModel(
-        "manger un delicieux sandwich chez subway!!",
-        ["simon",
-         "lucien",
-         "françois"]),
+            "manger un delicieux sandwich chez subway!!",
+            "2 : 00 : 00",
+            ["simon",
+             "lucien",
+             "françois"]),
         new GroupViewModel(
-        "une fat salade au boboon :-)",
-        ["denis",
-         "olivier",
-         "adrien"])]));
+            "une fat salade au boboon :-)",
+            "1 : 00 : 00",
+            ["denis",
+             "olivier",
+             "adrien"])]));
 })();
