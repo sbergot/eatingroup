@@ -2,3 +2,13 @@ body
 {
     padding-top: 60px;
 }
+
+.group
+{
+    height: 80px;
+}
+
+.row-fluid .span6:nth-child(2n + 3)
+{
+    margin-left : 0px;
+}
