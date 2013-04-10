@@ -23,13 +23,20 @@
     he automatically joins it.
 **** TODO create modal
 **** TODO send new group to server
-**** TODO broacast groups to clients
+**** TODO notify clients
+*** broacast groups to clients
+**** TODO the server notifies all client
+**** TODO clients send their model to the server
+**** TODO the server compares the client data to its own
+     and send a response with three sets of commands. Groups are
+     identified by unique IDs.
+***** TODO add missing groups
+***** TODO remove unexpected groups
+***** TODO update the members for the others
 *** TODO join
     a user can join an existing group. All other users are updated. If
-    the user was in a group, he quits the current group
-*** postpone
-    someone can ask to postpone the departure. If the majority of
-    people accept, the departure is effectively postponed
+    the user was in a group, he quits the current group. A user is
+    identified with its ID.
 *** TODO user infos
     the user can select a name in the navbar to be displayed in the
     joined group. The user is affected an invisible id stored in a
@@ -39,3 +46,6 @@
 *** TODO departure
     when the departure time is reached, a big modal window warns the
     user.
+*** postpone
+    someone can ask to postpone the departure. If the majority of
+    people accept, the departure is effectively postponed
