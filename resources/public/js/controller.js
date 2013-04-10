@@ -30,9 +30,12 @@ $(function() {
         };
         this.message = ko.observable("");
         var message = this.message;
-        listener.on("message", function(data) {
+        server.listen("message", function(data) {
             message(data.msg);
         });
+        this.helloServer = function() {
+            server.send("client_message", {desc : "yay"});
+        };
     }
 
     ko.applyBindings(new AppViewModel([

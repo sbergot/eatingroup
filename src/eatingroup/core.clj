@@ -5,6 +5,7 @@
    compojure.core)
   (:require
    [compojure.route :as route]
+   [clj-json.core :as json]
    eatingroup.view))
 
 (defn hello-world [channel request]
@@ -16,7 +17,28 @@
               :body (str "Hello World! " id)})))
 
 (defn group-handler [ch handshake]
-  (enqueue ch "{\"name\" : \"message\", \"data\":{\"msg\":\"hello you\"}}"))
+  (do
+   (enqueue
+    ch
+    (json/generate-string
+     {"name" "message"
+      "data" {"msg" "hello you"}}))
+   (receive
+    ch
+    (fn [_]
+      (enqueue
+       ch
+       (json/generate-string
+        {"name" "message"
+         "data" {"msg" "hello again"}}))))
+   (receive
+    ch
+    (fn [_]
+      (enqueue
+       ch
+       (json/generate-string
+        {"name" "message"
+         "data" {"msg" "hello the third"}}))))))
 
 (defroutes app-routes
   (GET "/" [] eatingroup.view/page)

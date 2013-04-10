@@ -45,6 +45,7 @@
   [:div.container
    [:h1 "eating groups"]
    [:h3 {:data-bind "text: message"}]
+   [:h3.btn {:data-bind "click: helloServer"} "say hello"]
    [:div.row-fluid
     {:data-bind "template: {
                    foreach: groups,
