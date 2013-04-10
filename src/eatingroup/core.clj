@@ -74,4 +74,4 @@
 
 
 (defn -main []
-  (start-http-server (wrap-ring-handler app-routes) {:port 8008}))
+  (initialize))
