@@ -1,4 +1,4 @@
-(function() {
+$(function() {
 
     function GroupViewModel(desc, time, members) {
         this.description = desc;
@@ -22,13 +22,17 @@
             if (elem.nodeType === 1) {
                 $(elem).hide().slideDown();
             }
-        }
+        };
         this.hideGroup = function(elem) {
             if (elem.nodeType === 1) {
                 $(elem).slideUp(function() { $(elem).remove(); });
             }
-        }
-
+        };
+        this.message = ko.observable("");
+        var message = this.message;
+        listener.on("message", function(data) {
+            message(data.msg);
+        });
     }
 
     ko.applyBindings(new AppViewModel([
@@ -44,4 +48,4 @@
             ["denis",
              "olivier",
              "adrien"])]));
-})();
+});

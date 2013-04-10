@@ -4,7 +4,7 @@
 *** DONE async handler
 *** DONE static file
 *** DONE bootstrap
-*** TODO websocket
+*** DONE websocket
 *** DONE knockout.js
 ** design
    single page web app.

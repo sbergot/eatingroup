@@ -38,13 +38,18 @@
    "http://code.jquery.com/jquery.js"
    "http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"
    "static/bootstrap/js/bootstrap.js"
+   "static/js/socket.js"
    "static/js/controller.js"))
 
 (defn main-container []
   [:div.container
    [:h1 "eating groups"]
+   [:h3 {:data-bind "text: message"}]
    [:div.row-fluid
-    {:data-bind "template: {foreach: groups,beforeRemove: hideGroup,afterAdd: showGroup}"}
+    {:data-bind "template: {
+                   foreach: groups,
+                   beforeRemove: hideGroup,
+                   afterAdd: showGroup}"}
     [:div.span6
      [:dl.dl-horizontal.well.group
       [:dt "Quoi?"]
