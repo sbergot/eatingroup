@@ -8,45 +8,33 @@
    [clj-json.core :as json]
    eatingroup.view))
 
-(defn hello-world [channel request]
-  (let [params (:route-params request)
-        id (:id params)]
-    (enqueue channel
-             {:status 200
-              :headers {"content-type" "text/html"}
-              :body (str "Hello World! " id)})))
+;; api
+(defn publish-group [data]
+  {"name" "addGroup"
+   "data" {"group" {"description" "yaya"
+                    "time" "never"
+                    "members" "me"}}})
 
-(defn group-handler [ch handshake]
+(defonce api-map
+  {"publish_group" publish-group})
+
+(defn dispatch-message [raw_message]
   (do
-   (enqueue
-    ch
-    (json/generate-string
-     {"name" "message"
-      "data" {"msg" "hello you"}}))
-   (receive
-    ch
-    (fn [_]
-      (enqueue
-       ch
-       (json/generate-string
-        {"name" "message"
-         "data" {"msg" "hello again"}}))))
-   (receive
-    ch
-    (fn [_]
-      (enqueue
-       ch
-       (json/generate-string
-        {"name" "message"
-         "data" {"msg" "hello the third"}}))))))
+    (println raw_message)
+    (let [{name "name" data "data"} (json/parse-string raw_message)]
+      (json/generate-string ((api-map name) data)))))
+
+;; web app
+(defn group-handler [ch handshake]
+  (receive-all ch #(enqueue ch (dispatch-message %))))
 
 (defroutes app-routes
   (GET "/" [] eatingroup.view/page)
-  (GET "/toto/:id" [id] (wrap-aleph-handler hello-world))
   (GET "/api" [] (wrap-aleph-handler group-handler))
   (route/resources "/static")
   (route/not-found "page not found"))
 
+; server management
 (defonce server (atom nil))
 
 (defn initialize []

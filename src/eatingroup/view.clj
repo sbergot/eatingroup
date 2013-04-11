@@ -38,6 +38,7 @@
    "http://code.jquery.com/jquery.js"
    "http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"
    "static/bootstrap/js/bootstrap.js"
+   "static/js/fadeVisible.js"
    "static/js/socket.js"
    "static/js/controller.js"))
 
@@ -61,7 +62,12 @@
     [:label.control-label
      {:for "when"} "Quand?"]
     [:div.controls
-     [:input {:type "text" :id "when" :placeholder "Quand?"}]]]
+     [:select
+      [:option 5]
+      [:option 10]
+      [:option 15]
+      [:option 30]
+      [:option 60]]]]
    [:div
     [:div.controls
      [:button.btn.btn-small
