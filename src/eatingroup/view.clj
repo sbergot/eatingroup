@@ -41,32 +41,51 @@
    "static/js/socket.js"
    "static/js/controller.js"))
 
+(defn group []
+  [:dl.dl-horizontal.well.group
+   [:dt "Quoi?"]
+   [:dd {:data-bind "text: description"}]
+   [:dt "Quand?"]
+   [:dd {:data-bind "text: time"}]
+   [:dt "Qui?"]
+   [:dd {:data-bind "text: members"}]])
+
+(defn group-form []
+  [:form.form-horizontal.well.group
+   [:div
+    [:label.control-label
+     {:for "what"} "Quoi?"]
+    [:div.controls
+     [:input {:type "text" :id "what" :placeholder "Quoi?"}]]]
+   [:div
+    [:label.control-label
+     {:for "when"} "Quand?"]
+    [:div.controls
+     [:input {:type "text" :id "when" :placeholder "Quand?"}]]]
+   [:div
+    [:div.controls
+     [:button.btn.btn-small
+      {:data-bind "click: $root.publishGroup"}
+      "Publish"]]]])
+
 (defn main-container []
   [:div.container
    [:h1 "eating groups"]
-   [:h3 {:data-bind "text: message"}]
-   [:h3.btn {:data-bind "click: helloServer"} "say hello"]
    [:div.row-fluid
     {:data-bind "template: {
                    foreach: groups,
                    beforeRemove: hideGroup,
                    afterAdd: showGroup}"}
+    [:div.span6 (group)]]
+   [:div.row
     [:div.span6
-     [:dl.dl-horizontal.well.group
-      [:dt "Quoi?"]
-      [:dd {:data-bind "text: description"}]
-      [:dt "Quand?"]
-      [:dd {:data-bind "text: time"}]
-      [:dt "Qui?"]
-      [:dd {:data-bind "text: members"}]]]]
-   [:div.row-fluid
-     [:div.span12
-      [:h1.btn.btn-large.btn-block.btn-primary
-       {:data-bind "click: addGroup"}
-       "create new group"]]]])
-
-
-
+     {:data-bind "fadeVisible: $root.form_visible"}
+     (group-form)]
+    [:div.span6
+     {:data-bind "fadeVisible: $root.button_visible"}
+     [:h1.btn.btn-large.btn-block.btn-primary.group
+      {:data-bind "click: $root.addGroup"}
+      "create new group"]]]])
 
 (defn page [request]
   (html5

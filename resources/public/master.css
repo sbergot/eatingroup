@@ -8,6 +8,18 @@ body
     height: 80px;
 }
 
+.btn-large.group
+{
+    font-size : 40px;
+    padding-top : 40px;
+    height: 118px;
+}
+
+form.group
+{
+    margin-top: 14px;
+}
+
 .row-fluid .span6:nth-child(2n + 3)
 {
     margin-left : 0px;
