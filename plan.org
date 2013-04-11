@@ -21,8 +21,8 @@
     the user must provide all the group information except the number
     of people. When he clicks ok, the group is created/published, and
     he automatically joins it.
-**** TODO fade-out create button
-**** TODO fade-in form
+**** DONE fade-out create button
+**** DONE fade-in form
 **** TODO on complete, add the group to the view model
 **** TODO send new group to server
 *** broacast groups to clients
