@@ -54,7 +54,12 @@ $(function() {
         server.listen(
             "addGroup",
             function(data) {
-                groups.push(data.group);
+                var group = data.group;
+                groups.push({
+                    description : data.description,
+                    time : data.time,
+                    members : "me"
+                });
             }
         );
     }

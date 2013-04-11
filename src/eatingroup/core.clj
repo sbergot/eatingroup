@@ -11,8 +11,8 @@
 ;; api
 (defn publish-group [data]
   {"name" "addGroup"
-   "data" {"group" {"description" "yaya"
-                    "time" "never"
+   "data" {"group" {"description" (data "description")
+                    "time" (data "time")
                     "members" "me"}}})
 
 (defonce api-map
