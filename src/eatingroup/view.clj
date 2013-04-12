@@ -60,13 +60,13 @@
      [:input {:type "text"
               :id "what"
               :placeholder "Quoi?"
-              :data-binding "value: form_description"}]]]
+              :data-bind "value: form_description"}]]]
    [:div
     [:label.control-label
      {:for "when"} "Quand?"]
     [:div.controls
      [:select
-      {:data-binding "value: form_time"}
+      {:data-bind "value: form_time"}
       [:option 5]
       [:option 10]
       [:option 15]
@@ -81,7 +81,6 @@
 (defn main-container []
   [:div.container
    [:h1 "eating groups"]
-   [:h3 {:data-bind "text: form_description"}]
    [:div.row-fluid
     {:data-bind "template: {
                    foreach: groups,
