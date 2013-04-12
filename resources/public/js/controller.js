@@ -1,4 +1,6 @@
 $(function() {
+    'use strict';
+
 
     function GroupViewModel(desc, time, members) {
         this.description = desc;
@@ -56,8 +58,8 @@ $(function() {
             function(data) {
                 var group = data.group;
                 groups.push({
-                    description : data.description,
-                    time : data.time,
+                    description : group.description,
+                    time : group.time,
                     members : "me"
                 });
             }

@@ -39,6 +39,8 @@
    "http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"
    "static/bootstrap/js/bootstrap.js"
    "static/js/fadeVisible.js"
+   "static/js/cookies.js"
+   "static/js/uuid.js"
    "static/js/socket.js"
    "static/js/controller.js"))
 

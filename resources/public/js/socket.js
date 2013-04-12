@@ -1,4 +1,14 @@
 (function() {
+    'use strict';
+
+    var user_id;
+    (function() {
+        user_id = Cookies('user_id');
+        if (!user_id) {
+            user_id = uuid();
+            Cookies("user_id", user_id);
+        }
+    })();
 
     var api_url = window.location.href.replace("http://", "ws://") + "api";
     var socket = new WebSocket(api_url);
@@ -29,7 +39,11 @@
     };
 
     function send(name, data) {
-        socket.send(JSON.stringify({name : name, data : data}));
+        socket.send(JSON.stringify({
+            name : name,
+            user : user_id,
+            data : data
+        }));
     }
 
     function listen(name, handler) {

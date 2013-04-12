@@ -3,5 +3,12 @@
         eatingroup.api))
 
 (deftest a-test
-  (testing "FIXME, I fail."
-    (is (= 0 1))))
+  (testing "publish group should return the same structure"
+    (is (=
+         (publish-group
+          {"description" "toto desc"
+           "time" 15})
+         {"name" "addGroup"
+          "data" {"group" {"description" "toto desc"
+                           "time" 15
+                           "members" "me"}}}))))
