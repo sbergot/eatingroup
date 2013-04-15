@@ -5,9 +5,10 @@
 (deftest a-test
   (testing "publish group should return the same structure"
     (is (=
-         (publish-group
+         (add-group
           {"description" "toto desc"
-           "time" 15})
+           "time" 15}
+          "toto")
          {"name" "addGroup"
           "data" {"group" {"description" "toto desc"
                            "time" 15
