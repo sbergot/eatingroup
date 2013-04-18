@@ -41,19 +41,23 @@
 
 (defn update-members [group-id updater state]
   (let [group (get-fld groups group-id state)
-        members (group :members)]
+        members (:members group)]
     (set-fld groups
          (assoc group :members
                 (updater members))
          state)))
 
 (defn add-user [user-id group-id state]
-  (update-members group-id
-    #(conj % user-id) state))
+  (update-members
+   group-id
+   #(conj % user-id)
+   state))
 
 (defn remove-user [user-id group-id state]
-  (update-members group-id
-    #(disj % user-id) state))
+  (update-members
+   group-id
+   #(disj % user-id)
+   state))
 
 (defn join [user-id group-id state]
   (let [user (get-fld users user-id state)
