@@ -64,5 +64,14 @@
 (deftest user-manipulation-tests
   (testing "add/remove user to a group"
     (let [user-added (add-user "Tom" "id1" PopulatedState)
-          populated-group (get-fld groups "id1" user-added)]
-      (is (= #{"Tom"} (:members populated-group))))))
+          two-users (add-user "John" "id1" user-added)
+          two-users-bis (add-user "Tom" "id1" two-users)
+          user-removed (remove-user "Tom" "id1" two-users)
+          user-added-group (get-fld groups "id1" user-added)
+          two-users-group (get-fld groups "id1" two-users)
+          two-users-bis-group (get-fld groups "id1" two-users-bis)
+          user-removed-group (get-fld groups "id1" user-removed)]
+      (is (= #{"Tom"} (:members user-added-group)))
+      (is (= #{"Tom" "John"} (:members two-users-group)))
+      (is (= #{"Tom" "John"} (:members two-users-bis-group)))
+      (is (= #{"John"} (:members user-removed-group))))))
