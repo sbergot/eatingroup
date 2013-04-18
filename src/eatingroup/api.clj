@@ -7,7 +7,7 @@
 
 ;; state & primitive operations
 
-(defonce state
+(defonce GlobalState
   (atom
     {:groups {}
      :users {}}))
@@ -26,7 +26,7 @@
     (get-in state [field-name id]))
   (set-fld [this obj state]
     (assoc-in state
-      [field-name (obj :id)]
+      [field-name (:id obj)]
       obj)))
 
 ;; user & group operations
