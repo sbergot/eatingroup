@@ -3,15 +3,10 @@
         eatingroup.api))
 
 (defn create-user [id]
-  (eatingroup.api.User. id
-                        id
-                        nil))
+  (eatingroup.api.User. id id nil))
 
 (defn create-group [id]
-  (eatingroup.api.Group. id
-                         id
-                         12
-                         #{}))
+  (eatingroup.api.Group. id id 12 #{}))
 
 (def InitState
   {:groups {}
@@ -33,19 +28,25 @@
   (testing "group add/fetch"
     (let [group (create-group "kebab")
           state-with-group (set-fld groups group InitState)
+          state-without-group (rem-fld groups (:id group) state-with-group)
           not-found (get-fld groups (:id group) InitState)
-          found (get-fld groups (:id group) state-with-group)]
+          found (get-fld groups (:id group) state-with-group)
+          not-found-bis (get-fld groups (:id group) state-without-group)]
       (is (= not-found nil))
-      (is (= found group)))))
+      (is (= found group))
+      (is (= not-found-bis nil)))))
 
 (deftest user-tests
   (testing "user add/fetch"
     (let [user (create-user "Tom")
           state-with-user (set-fld users user InitState)
+          state-without-user (rem-fld users (:id user) state-with-user)
           not-found (get-fld users (:id user) InitState)
-          found (get-fld users (:id user) state-with-user)]
+          found (get-fld users (:id user) state-with-user)
+          not-found-bis (get-fld users (:id user) state-without-user)]
       (is (= not-found nil))
-      (is (= found user)))))
+      (is (= found user))
+      (is (= not-found-bis nil)))))
 
 (def PopulatedState
   (->> InitState
@@ -63,15 +64,43 @@
 
 (deftest user-manipulation-tests
   (testing "add/remove user to a group"
-    (let [user-added (add-user "Tom" "id1" PopulatedState)
-          two-users (add-user "John" "id1" user-added)
-          two-users-bis (add-user "Tom" "id1" two-users)
-          user-removed (remove-user "Tom" "id1" two-users)
-          user-added-group (get-fld groups "id1" user-added)
-          two-users-group (get-fld groups "id1" two-users)
-          two-users-bis-group (get-fld groups "id1" two-users-bis)
-          user-removed-group (get-fld groups "id1" user-removed)]
-      (is (= #{"Tom"} (:members user-added-group)))
-      (is (= #{"Tom" "John"} (:members two-users-group)))
-      (is (= #{"Tom" "John"} (:members two-users-bis-group)))
-      (is (= #{"John"} (:members user-removed-group))))))
+    (let [group (->> PopulatedState
+                     (add-user "Tom" "id1")
+                     (get-fld groups "id1"))]
+      (is (= #{"Tom"} (:members group))))
+    (let [group (->> PopulatedState
+                     (add-user "Tom" "id1")
+                     (add-user "John" "id1")
+                     (get-fld groups "id1"))]
+      (is (= #{"Tom" "John"} (:members group))))
+    (let [group (->> PopulatedState
+                     (add-user "Tom" "id1")
+                     (add-user "John" "id1")
+                     (add-user "Tom" "id1")
+                     (get-fld groups "id1"))]
+      (is (= #{"Tom" "John"} (:members group))))
+    (let [group (->> PopulatedState
+                     (add-user "Tom" "id1")
+                     (remove-user "Tom" "id1")
+                     (get-fld groups "id1"))]
+      (is (= nil group)))))
+
+(deftest user-join-tests
+  (testing "let user join a group"
+    (let [new-state (->> PopulatedState
+                     (join "Tom" "id1"))
+          group (get-fld groups "id1" new-state)
+          user (get-fld users "Tom" new-state)]
+      (is (= #{"Tom"} (:members group)))
+      (is (= "id1" (:group user))))
+    (let [new-state (->> PopulatedState
+                     (join "Tom" "id1")
+                     (join "Tom" "id2"))
+          not-found (get-fld groups "id1" new-state)
+          group (get-fld groups "id2" new-state)
+          user (get-fld users "Tom" new-state)]
+      (is (= nil not-found))
+      (is (= #{"Tom"} (:members group)))
+      (is (= "id2" (:group user))))
+
+    ))

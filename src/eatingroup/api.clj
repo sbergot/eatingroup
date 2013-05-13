@@ -2,7 +2,8 @@
   (:use
    [lamina.core :only [enqueue channel receive-all]]
    [lamina.api :only [bridge]]
-   [clojure.walk :only [keywordize-keys]])
+   [clojure.walk :only [keywordize-keys]]
+   [clojure.core.incubator :only [dissoc-in]])
   (:require [clj-json.core :as json]))
 
 ;; state & primitive operations
@@ -18,7 +19,10 @@
     "retrieve the object by its id")
   (set-fld [this obj state]
     "creates the object or replace
-     it and returns the new state"))
+     it and returns the new state")
+  (rem-fld [this obj state]
+    "remove the object and returns
+     the new state"))
 
 (deftype StateFieldSet [field-name]
   AStateFieldSet
@@ -27,7 +31,9 @@
   (set-fld [this obj state]
     (assoc-in state
       [field-name (:id obj)]
-      obj)))
+      obj))
+  (rem-fld [this id state]
+    (dissoc-in state [field-name id])))
 
 ;; user & group operations
 
@@ -54,14 +60,19 @@
    state))
 
 (defn remove-user [user-id group-id state]
-  (update-members
-   group-id
-   #(disj % user-id)
-   state))
+  (let [new-state (update-members
+                   group-id
+                   #(disj % user-id)
+                   state)
+        group (get-fld groups group-id new-state)
+        members (:members group)]
+    (if (empty? members)
+      (rem-fld groups group-id state)
+      new-state)))
 
 (defn join [user-id group-id state]
   (let [user (get-fld users user-id state)
-        old-group-id (user :group)]
+        old-group-id (:group user)]
     (->> state
          (remove-user user-id old-group-id)
          (add-user user-id group-id)
