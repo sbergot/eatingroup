@@ -1,28 +1,16 @@
-(ns eatingroup.api-test
+(ns eatingroup.groups-test
   (:use clojure.test
-        eatingroup.api))
+        eatingroup.groups))
 
 (defn create-user [id]
-  (eatingroup.api.User. id id nil))
+  (eatingroup.groups.User. id id nil))
 
 (defn create-group [id]
-  (eatingroup.api.Group. id id 12 #{}))
+  (eatingroup.groups.Group. id id 12 #{}))
 
 (def InitState
   {:groups {}
    :users {}})
-
-(deftest a-test
-  (testing "publish group should return the same structure"
-    (is (=
-         (publish-group-mock
-          {:description "toto desc"
-           :time 15}
-          "toto")
-         {"name" "addGroup"
-          "data" {"group" {"description" "toto desc"
-                           "time" 15
-                           "members" "me"}}}))))
 
 (deftest group-tests
   (testing "group add/fetch"
